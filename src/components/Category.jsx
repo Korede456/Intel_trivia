@@ -5,6 +5,13 @@ import Trivia from "./Trivia"; // Make sure this import is correct
 const Category = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [isActive, setIsActive] = useState(false);
+  const Categories = [
+    "science",
+    "math",
+    "history",
+    "entertainment",
+    "programming",
+  ];
 
   const handleComponent = (category) => {
     setSelectedCategory(category);
@@ -16,15 +23,11 @@ const Category = () => {
       {!isActive ? (
         <Container>
           <Heading> Please Select a Category</Heading>
-          <Button onClick={() => handleComponent("science")}>Science</Button>
-          <Button onClick={() => handleComponent("math")}>Math</Button>
-          <Button onClick={() => handleComponent("history")}>History</Button>
-          <Button onClick={() => handleComponent("entertainment")}>
-            Entertainment
-          </Button>
-          <Button onClick={() => handleComponent("programming")}>
-            Programming
-          </Button>
+          {Categories.map((item, index) => (
+            <Button key={index} onClick={() => handleComponent(item)}>
+              {item.toUpperCase()}
+            </Button>
+          ))}
         </Container>
       ) : (
         <Trivia prop={selectedCategory} /> // Render the Trivia component when isActive is false
