@@ -13,7 +13,7 @@ const Trivia = ({ prop }) => {
   const [totalQuestionAnswered, setTotalQuestionAnswered] = useState(0);
   const [totalCorrectAnswers, setTotalCorrectAnswers] = useState(0);
   const [totalWrongAnswers, setTotalWrongAnswers] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(prop === "math" ? 30 : 10);
+  let [timeLeft, setTimeLeft] = useState(prop === "math" ? 30 : 10);
 
   useEffect(() => {
     // Function to set questions based on the prop value
@@ -43,25 +43,6 @@ const Trivia = ({ prop }) => {
     setQuestionsBasedOnProp();
   }, [prop]); // Run the effect whenever the prop value changes
 
-  // Countdown timer logic
-  useEffect(() => {
-    // Set the timeout duration based on the category
-    const timeoutDuration = prop === "math" ? 30 : 10;
-
-    if (timeLeft === 0) {
-      // Move to the next question if time runs out
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setTimeLeft(timeoutDuration); // Reset the countdown timer
-    } else {
-      // Update the countdown timer every second
-      const timer = setTimeout(() => {
-        setTimeLeft(timeLeft - 1);
-      }, 1000);
-      // Clean up the timer when the component unmounts or when the question changes
-      return () => clearTimeout(timer);
-    }
-  }, [timeLeft, currentQuestionIndex, prop]);
-
   // handle options
   const handleOptions = (index) => {
     const clickedOption = questions[currentQuestionIndex].options[index];
@@ -86,14 +67,34 @@ const Trivia = ({ prop }) => {
       // Reset background colors
       options.forEach((option) => {
         option.style.backgroundColor = ""; // Reset background color to default
+        
       });
       setTotalQuestionAnswered(totalQuestionAnswered + 1);
-      setTimeLeft(0);
+      setTimeLeft(prop === "math" ? 30 : 10)
 
       // Move to next question index
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     }, 1000); // Delay for 1 second
   };
+
+   // Countdown timer logic
+useEffect(() => {
+  // Set the timeout duration based on the category
+  const timeoutDuration = prop === "math" ? 30 : 10;
+
+  if (timeLeft === 0) {
+    // Move to the next question if time runs out+
+    setCurrentQuestionIndex(currentQuestionIndex + 1);
+    setTimeLeft(timeoutDuration); // Reset the countdown timer
+  } else {
+    // Update the countdown timer every second
+    const timer = setTimeout(() => {
+      setTimeLeft(timeLeft - 1);
+    }, 1000);
+    // Clean up the timer when the component unmounts or when the question changes
+    return () => clearTimeout(timer);
+  }
+}, [timeLeft, currentQuestionIndex, prop]); // Add currentQuestionIndex as a dependency
 
   // Render the current question and options, or a congratulatory message if at the end of the game
   return (
