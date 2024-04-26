@@ -1,4 +1,13 @@
-import { Container, Text, List, ListItem, Heading, Button } from "@chakra-ui/react";
+import {
+  Container,
+  Text,
+  List,
+  ListItem,
+  Heading,
+  Button,
+  CircularProgress,
+  CircularProgressLabel,
+} from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { EntertainmentQuestions } from "../data/categories/entertainment";
 import { HistoryQuestions } from "../data/categories/history";
@@ -37,11 +46,24 @@ const Trivia = ({ prop }) => {
         default:
           setQuestions(null);
       }
+
+      if (questions) {
+        setQuestions(shuffleArray(questions));
+      }
     };
+
+    // a function that shuffles the questions
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
 
     // Call the function to set questions when the component mounts or when the prop value changes
     setQuestionsBasedOnProp();
-  }, [prop]); // Run the effect whenever the prop value changes
+  }, [prop, questions]); // Run the effect whenever the prop value changes
 
   // handle options
   const handleOptions = (index) => {
@@ -67,42 +89,48 @@ const Trivia = ({ prop }) => {
       // Reset background colors
       options.forEach((option) => {
         option.style.backgroundColor = ""; // Reset background color to default
-        
       });
       setTotalQuestionAnswered(totalQuestionAnswered + 1);
-      setTimeLeft(prop === "math" ? 30 : 10)
+      setTimeLeft(prop === "math" ? 30 : 10);
 
       // Move to next question index
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     }, 1000); // Delay for 1 second
   };
 
-   // Countdown timer logic
-useEffect(() => {
-  // Set the timeout duration based on the category
-  const timeoutDuration = prop === "math" ? 30 : 10;
+  // Countdown timer logic
+  useEffect(() => {
+    // Set the timeout duration based on the category
+    const timeoutDuration = prop === "math" ? 30 : 10;
 
-  if (timeLeft === 0) {
-    // Move to the next question if time runs out+
-    setCurrentQuestionIndex(currentQuestionIndex + 1);
-    setTimeLeft(timeoutDuration); // Reset the countdown timer
-  } else {
-    // Update the countdown timer every second
-    const timer = setTimeout(() => {
-      setTimeLeft(timeLeft - 1);
-    }, 1000);
-    // Clean up the timer when the component unmounts or when the question changes
-    return () => clearTimeout(timer);
-  }
-}, [timeLeft, currentQuestionIndex, prop]); // Add currentQuestionIndex as a dependency
+    if (timeLeft === 0) {
+      // Move to the next question if time runs out+
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setTimeLeft(timeoutDuration); // Reset the countdown timer
+    } else {
+      // Update the countdown timer every second
+      const timer = setTimeout(() => {
+        setTimeLeft(timeLeft - 1);
+      }, 1000);
+      // Clean up the timer when the component unmounts or when the question changes
+      return () => clearTimeout(timer);
+    }
+  }, [timeLeft, currentQuestionIndex, prop]); // Add currentQuestionIndex as a dependency
 
   // Render the current question and options, or a congratulatory message if at the end of the game
   return (
     <Container>
-      {questions && questions.length > 0 && currentQuestionIndex < 40 ? (
+      {questions && questions.length > 0 && currentQuestionIndex < 20 ? (
         <>
-        <Heading>{prop.toUpperCase()}</Heading>
-          <Text>Time Left: {timeLeft}</Text>
+          <Heading>{prop.toUpperCase()}</Heading>
+
+          <CircularProgress
+            value={timeLeft}
+            max={prop === "math" ? 30 : 10}
+            color="red"
+          >
+            <CircularProgressLabel>{timeLeft}</CircularProgressLabel>
+          </CircularProgress>
           <Text>{questions[currentQuestionIndex].question}</Text>
           <List>
             {questions[currentQuestionIndex].options.map((item, index) => (
@@ -121,11 +149,13 @@ useEffect(() => {
           <Heading>
             Congratulations! You have reached the end of the trivia.
           </Heading>
-          <Text>Total Trivia Questions: 40</Text>
+          <Text>Total Trivia Questions: 20</Text>
           <Text>Total Questions Answered: {totalQuestionAnswered}</Text>
           <Text>Total Correct Answers: {totalCorrectAnswers}</Text>
           <Text>Total Wrong Answers: {totalWrongAnswers}</Text>
-          <Button onClick={()=>window.location.reload()}>Start a new game</Button>
+          <Button onClick={() => window.location.reload()}>
+            Start a new game
+          </Button>
         </>
       )}
     </Container>

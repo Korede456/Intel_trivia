@@ -1,4 +1,4 @@
-import { Container, Button } from "@chakra-ui/react";
+import { Flex, Button } from "@chakra-ui/react";
 import Category from "./components/Category";
 import Intro from "./components/Intro";
 import { useState } from "react";
@@ -10,7 +10,7 @@ const App = () => {
     setIsClicked(true);
   };
   return (
-    <Container>
+    <Flex maxW="100%" align='center' justify="center" flexDir="column" gap="100px">
       {!isClicked ? (
         <>
           {" "}
@@ -20,7 +20,7 @@ const App = () => {
       ) : (
         <Category />
       )}
-    </Container>
+    </Flex>
   );
 };
 
