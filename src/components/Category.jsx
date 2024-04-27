@@ -24,13 +24,13 @@ const Category = () => {
   };
 
   return (
-    <VStack>
+    <>
       {!isActive ? (
-        <VStack gap="5">
-          <Heading>Choose Category</Heading>
-          <Flex gap="5">
+        <VStack gap="5" minW="350px" maxW="100%">
+          <Heading mb="100px">Choose Category</Heading>
+          <Flex gap="5" justify="center" align="center" >
             {Categories.map((item, index) => (
-              <VStack key={index} onClick={() => handleComponent(item)}>
+              <VStack key={index} onClick={() => handleComponent(item)} wrap ={"50%"}>
                 <item.icon />
                 <Text>{item.name.toUpperCase()}</Text>
               </VStack>
@@ -40,7 +40,7 @@ const Category = () => {
       ) : (
         <Trivia prop={selectedCategory} /> // Render the Trivia component when isActive is false
       )}
-    </VStack>
+    </>
   );
 };
 
