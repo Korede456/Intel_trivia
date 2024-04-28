@@ -27,11 +27,25 @@ const Category = () => {
     <>
       {!isActive ? (
         <VStack gap="5" minW="350px" maxW="100%">
-          <Heading mb="100px">Choose Category</Heading>
-          <Flex gap="5" justify="center" align="center" >
+          <Heading mb="50px">Choose Category</Heading>
+          <Flex
+            gap="5"
+            justify="center"
+            align="center"
+            flexWrap="wrap"
+            width="100%"
+          >
             {Categories.map((item, index) => (
-              <VStack key={index} onClick={() => handleComponent(item)} wrap ={"50%"}>
-                <item.icon />
+              <VStack
+                key={index}
+                onClick={() => handleComponent(item)}
+                w="40%"
+                gap="5px"
+                p="10"
+                bg="grey"
+                borderRadius="10px"
+              >
+                <item.icon size="50px"/>
                 <Text>{item.name.toUpperCase()}</Text>
               </VStack>
             ))}

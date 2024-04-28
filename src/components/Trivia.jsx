@@ -1,8 +1,7 @@
 import {
   Container,
   Text,
-  List,
-  ListItem,
+  Flex,
   Heading,
   Button,
   CircularProgress,
@@ -132,17 +131,24 @@ const Trivia = ({ prop }) => {
             <CircularProgressLabel>{timeLeft}</CircularProgressLabel>
           </CircularProgress>
           <Text>{questions[currentQuestionIndex].question}</Text>
-          <List>
+          <Flex
+            gap="5"
+            justify="center"
+            align="center"
+            flexWrap="wrap"
+            width="100%"
+          >
             {questions[currentQuestionIndex].options.map((item, index) => (
-              <ListItem
+              <Text
                 key={index}
                 className="option"
                 onClick={() => handleOptions(index)}
+                w="40%"
               >
                 {item}
-              </ListItem>
+              </Text>
             ))}
-          </List>
+          </Flex>
         </>
       ) : (
         <>
