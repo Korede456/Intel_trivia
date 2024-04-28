@@ -11,7 +11,14 @@ const App = () => {
     setIsClicked(true);
   };
   return (
-    <Container id="box" minH="100vh" maxW="100%" pt="50px" align="center">
+    <Container
+      id="box"
+      minH="100vh"
+      maxW="100%"
+      pt="50px"
+      align="center"
+      color="white"
+    >
       <Flex
         id="backdrop"
         backdropFilter="auto"
