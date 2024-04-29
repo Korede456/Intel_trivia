@@ -149,6 +149,11 @@ const Trivia = ({ prop }) => {
               </Text>
             ))}
           </Flex>
+          <Button
+            onClick={() => setCurrentQuestionIndex(currentQustionIndex + 1)}
+          >
+            Next
+          </Button>
         </>
       ) : (
         <>
