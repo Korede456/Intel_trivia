@@ -6,6 +6,7 @@ import {
   Button,
   CircularProgress,
   CircularProgressLabel,
+  VStack,
 } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { EntertainmentQuestions } from "../data/categories/entertainment";
@@ -137,6 +138,7 @@ const Trivia = ({ prop }) => {
             align="center"
             flexWrap="wrap"
             width="100%"
+            my="30px"
           >
             {questions[currentQuestionIndex].options.map((item, index) => (
               <Text
@@ -150,13 +152,16 @@ const Trivia = ({ prop }) => {
             ))}
           </Flex>
           <Button
-            onClick={() =>setCurrentQuestionIndex(currentQuestionIndex + 1)}
+            onClick={() => {
+              setCurrentQuestionIndex(currentQuestionIndex + 1);
+              setTimeLeft(prop === "math" ? 30 : 10);
+            }}
           >
             Next
           </Button>
         </>
       ) : (
-        <>
+        <VStack gap="20px" justify="center" align="center">
           <Heading>
             Congratulations! You have reached the end of the trivia.
           </Heading>
@@ -167,7 +172,7 @@ const Trivia = ({ prop }) => {
           <Button onClick={() => window.location.reload()}>
             Start a new game
           </Button>
-        </>
+        </VStack>
       )}
     </Container>
   );
