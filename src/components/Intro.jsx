@@ -8,7 +8,7 @@ const Intro = () => {
         Welcome to our trivia adventure, where you will stretch your mind across
         various topics. With brain-teasers spanning history, science,
         entertainment, programming and literature, join us on a journey of
-        discovery and fun to elevate your IQ!
+        discovery and fun to elevate your IQ! Anwser all 20 questions and aim for a high score!
       </Text>
     </Container>
   );
