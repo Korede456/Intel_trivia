@@ -7,8 +7,6 @@ import {
   CircularProgress,
   CircularProgressLabel,
   VStack,
-  Stack,
-  Skeleton,
 } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { EntertainmentQuestions } from "../data/categories/entertainment";
@@ -124,11 +122,6 @@ const Trivia = ({ prop }) => {
     <Container>
       {questions && questions.length > 0 && currentQuestionIndex < 20 ? (
         <>
-          <Stack>
-            <Skeleton height="20px" />
-            <Skeleton height="20px" />
-            <Skeleton height="20px" />
-          </Stack>
           <Heading>{prop.toUpperCase()}</Heading>
 
           <CircularProgress
