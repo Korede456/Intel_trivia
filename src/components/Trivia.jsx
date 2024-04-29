@@ -157,7 +157,7 @@ const Trivia = ({ prop }) => {
               setTimeLeft(prop === "math" ? 30 : 10);
             }}
           >
-            Next
+            Skip
           </Button>
         </>
       ) : (
