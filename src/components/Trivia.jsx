@@ -150,7 +150,7 @@ const Trivia = ({ prop }) => {
             ))}
           </Flex>
           <Button
-            onClick={() => setCurrentQuestionIndex(currentQustionIndex + 1)}
+            onClick={() =>{setCurrentQuestionIndex(currentQuestionIndex + 1)}}
           >
             Next
           </Button>
